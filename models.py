@@ -73,6 +73,17 @@ class Image(db.Model):
             "photographer":self.photographer
         }
 
+    def serialize_with_exif(self):
+        """ Serial to dictionary with EXIF data """
+
+        image_exif_data = self.exif_data[0]
+        serialized_image = self.serialize()
+        serialized_exif_data = image_exif_data.serialize()
+        serialized_exif_data.pop("image_id")
+        serialized_image['exif_data'] = serialized_exif_data
+
+        return serialized_image
+
 
 class EXIFData(db.Model):
     """ Model for exif_data table """
