@@ -9,7 +9,7 @@ from shortuuid import uuid
 from image_processing import (
     get_exif_data, make_thumbnail, convert_to_grayscale, resize_image
 )
-from service import get_and_filter_images
+from service import get_and_filter_images, serialize_image_with_exif_data
 
 BUCKET_THUMBNAILS_FOLDER = 'pixly/images/thumbnails/'
 BUCKET_ORIGINALS_FOLDER = 'pixly/images/originals/'
@@ -44,12 +44,7 @@ def get_image(id):
     """ grabs an image from the database and returns as json """
 
     image = Image.query.get_or_404(id)
-
-    image_exif_data = image.exif_data[0]
-    serialized_image = image.serialize()
-    serialized_exif_data = image_exif_data.serialize()
-    serialized_exif_data.pop("image_id")
-    serialized_image['exif_data'] = serialized_exif_data
+    serialized_image = serialize_image_with_exif_data(image)
 
     return jsonify(image=serialized_image)
 

@@ -36,3 +36,15 @@ def get_and_filter_images():
     images = images.order_by(Image.id).all()
 
     return images
+
+
+def serialize_image_with_exif_data(image):
+    """ Serialize an image with its exif data and return it """
+
+    image_exif_data = image.exif_data[0]
+    serialized_image = image.serialize()
+    serialized_exif_data = image_exif_data.serialize()
+    serialized_exif_data.pop("image_id")
+    serialized_image['exif_data'] = serialized_exif_data
+
+    return serialized_image
