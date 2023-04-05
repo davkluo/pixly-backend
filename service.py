@@ -65,7 +65,7 @@ def upload_service():
         form_data=form_data
     )
 
-    if uploaded_image == None:
+    if uploaded_image is None:
         return None
 
     image = Image(
