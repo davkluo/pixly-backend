@@ -82,6 +82,7 @@ flask run -p 5000
  |--pixly_aws.py                  # methods for uploading to aws
  |--readme.md                     # project readme
  |--requirements.txt              # dependencies
+ |--service.py                    # route servicing functions
 ```
 ## API
 List of available routes:
@@ -89,7 +90,7 @@ List of available routes:
 `GET /api/images` - get all images as json data (optional filtering)\
 `GET /api/images/:id` - get json data for image by id\
 `POST /api/images` - post/upload new photo\
-`PATCH /api/images/:id` - patch to increment image view count by id\
+`PATCH /api/images/:id` - patch to increment image view count by id
 
 ## Future Improvements
 - Write tests
