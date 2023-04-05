@@ -50,7 +50,7 @@ def upload_image():
 
     image = upload_service()
 
-    if image == None:
+    if image is None:
         return (jsonify(error="File failed to upload."), 500)
 
     serialized = image.serialize()
