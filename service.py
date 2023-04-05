@@ -5,6 +5,7 @@ from image_processing import (
     get_exif_data, make_thumbnail, convert_to_grayscale, resize_image
 )
 from pixly_aws import upload_image_to_aws
+from sqlalchemy import desc
 
 BUCKET_THUMBNAILS_FOLDER = 'pixly/images/thumbnails/'
 BUCKET_ORIGINALS_FOLDER = 'pixly/images/originals/'
@@ -41,7 +42,7 @@ def get_images_service():
     if search_term:
         images = images.filter(Image.title.ilike(f"%{search_term}%"))
 
-    images = images.order_by(Image.id).all()
+    images = images.order_by(desc(Image.upload_at)).all()
 
     return images
 
@@ -65,7 +66,7 @@ def upload_service():
         form_data=form_data
     )
 
-    if uploaded_image == None:
+    if uploaded_image is None:
         return None
 
     image = Image(
